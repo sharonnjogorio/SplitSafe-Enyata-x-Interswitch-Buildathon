@@ -1,0 +1,85 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+.formSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-12) var(--space-10);
+  background: var(--color-bg-white);
+}
+
+.heroSide {
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-12);
+  position: relative;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.15;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+}
+
+.heroAccent {
+  width: 4px;
+  height: 44px;
+  background: var(--color-amber);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+}
+
+.heroTitle {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.25;
+  margin-bottom: var(--space-3);
+}
+
+.heroDesc {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  max-width: 320px;
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 5px 12px;
+  position: absolute;
+  bottom: var(--space-6);
+  left: var(--space-6);
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-success);
+  flex-shrink: 0;
+}

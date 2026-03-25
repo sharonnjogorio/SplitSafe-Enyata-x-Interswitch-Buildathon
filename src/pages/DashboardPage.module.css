@@ -1,0 +1,367 @@
+/* DashboardPage.module.css */
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr var(--right-panel-width);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-5);
+}
+
+/* ── Balance hero card ── */
+.balanceCard {
+  background: var(--gradient-balance);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  color: var(--color-text-white);
+  margin-bottom: var(--space-6);
+}
+
+.balanceLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: var(--space-2);
+}
+
+.balanceAmount {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  line-height: 1;
+}
+
+.balanceTrend {
+  width: 28px;
+  height: 28px;
+  background: rgba(255,255,255,0.2);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.balanceTrendIcon {
+  width: 14px;
+  height: 14px;
+  color: white;
+}
+
+/* Sub stats grid */
+.balanceSubGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.balanceSub {
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+.balanceSubTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.balanceSubLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+.balanceSubArrow {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.balanceSubAmount {
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.01em;
+}
+
+/* ── Section header row ── */
+.sectionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.viewAll {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.viewAll:hover { text-decoration: underline; }
+
+/* ── Groups grid ── */
+.groupsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+/* ── Activity feed ── */
+.activityList { display: flex; flex-direction: column; }
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.activityItem:last-child { border-bottom: none; }
+
+.activityIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.activityIconSvg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-secondary);
+}
+
+.activityBody   { flex: 1; min-width: 0; }
+.activityName   {
+  font-size: 13px; font-weight: 600; color: var(--color-text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.activityMeta   { font-size: 12px; color: var(--color-text-secondary); margin-top: 1px; }
+
+.activityRight  { text-align: right; flex-shrink: 0; }
+.activityAmt    { font-size: 13px; font-weight: 700; }
+.activityAmt.pos { color: var(--color-success); }
+.activityAmt.neg { color: var(--color-danger); }
+.activitySubLabel {
+  font-size: 10px; color: var(--color-text-muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* ── Right panel ── */
+.rightPanel { display: flex; flex-direction: column; gap: var(--space-4); }
+
+/* Vacation fund / circle card */
+.fundCard {
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-card);
+}
+
+.fundCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.fundCardLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.fundCardIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.fundCardTitle { font-size: 14px; font-weight: 700; color: var(--color-text); }
+
+.fundCardPct {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.fundProgress {
+  height: 6px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.fundProgressFill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+.fundMeta { font-size: 11px; color: var(--color-text-secondary); margin-bottom: var(--space-4); }
+
+.manageGoalBtn {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.manageGoalBtn:hover { background: var(--color-bg); }
+
+/* AI Smart Feature card */
+.smartCard {
+  background: var(--gradient-balance);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  color: var(--color-text-white);
+}
+
+.smartBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255,255,255,0.2);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+
+.smartBadgeIcon {
+  width: 12px;
+  height: 12px;
+  color: white;
+}
+
+.smartTitle {
+  font-size: 18px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: var(--space-2);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.smartDesc {
+  font-size: 12px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.6;
+  margin-bottom: var(--space-4);
+}
+
+.smartBtn {
+  width: 100%;
+  padding: 11px;
+  background: var(--color-bg-white);
+  color: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.smartBtn:hover { background: var(--color-primary-light); }
+
+/* Monthly spending card */
+.spendingCard {
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-card);
+}
+
+.spendingTitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.spendingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: var(--space-2);
+}
+
+.spendingName { font-weight: 500; color: var(--color-text); }
+.spendingPct  { color: var(--color-text-secondary); font-size: 12px; font-weight: 600; }
+
+.spendingBar {
+  height: 4px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+
+.spendingBarFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+}

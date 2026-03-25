@@ -1,0 +1,113 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* ── Reset ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Design Tokens ─────────────────────────────────── */
+:root {
+  /* Primary blue — solid CTA / links / active states */
+  --color-primary:        #1D4ED8;
+  --color-primary-dark:   #1741B6;
+  --color-primary-light:  #EFF6FF;
+  --color-primary-muted:  #93C5FD;
+
+  /* Gradient — balance card, settle button, progress fills */
+  --gradient-balance: linear-gradient(135deg, #645EFB 0%, #4B41E1 100%);
+
+  /* Semantic */
+  --color-success:        #16A34A;
+  --color-success-light:  #DCFCE7;
+  --color-danger:         #DC2626;
+  --color-danger-light:   #FEE2E2;
+  --color-amber:          #EEC200;
+  --color-amber-light:    #FEFCE8;
+  --color-amber-dark:     #A16207;
+
+  /* Backgrounds */
+  --color-bg:             #F3F4F8;   /* outer page — light blue-grey */
+  --color-bg-white:       #FFFFFF;
+  --color-bg-input:       #F1F2F4;
+  --color-bg-overlay:     rgba(17, 24, 39, 0.5);
+
+  /* Text */
+  --color-text:           #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-muted:     #9CA3AF;
+  --color-text-white:     #FFFFFF;
+  --color-text-link:      #1D4ED8;
+
+  /* Borders */
+  --color-border:         #E5E7EB;
+  --color-border-light:   #F3F4F6;
+
+  /* Layout */
+  --sidebar-width:        220px;
+  --topnav-height:        56px;
+  --right-panel-width:    280px;
+
+  /* Spacing */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;
+  --space-4: 16px;  --space-5: 20px;  --space-6: 24px;
+  --space-8: 32px;  --space-10: 40px; --space-12: 48px;
+
+  /* Radius */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:   0 10px 32px rgba(0,0,0,0.10);
+  --shadow-card: 0 2px 12px rgba(29, 78, 216, 0.07);
+
+  /* Typography */
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'SFMono-Regular', 'Fira Code', monospace;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+}
+
+/* ── Base elements ──────────────────────────────────── */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--color-text-link);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+button { font-family: var(--font-sans); cursor: pointer; }
+input, textarea, select { font-family: var(--font-sans); }
+img { display: block; max-width: 100%; }
+
+/* ── Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }

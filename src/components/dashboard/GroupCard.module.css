@@ -1,0 +1,139 @@
+/* components/dashboard/GroupCard.module.css */
+
+.card {
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+}
+
+/* ── Top row: icon + badge ── */
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+/* Colored square icon container */
+.iconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconWrap.blue   { background: #DBEAFE; }  /* light blue  — trips, travel  */
+.iconWrap.purple { background: #EDE9FE; }  /* light purple — home, apt     */
+.iconWrap.green  { background: #DCFCE7; }  /* light green — food, dining   */
+.iconWrap.amber  { background: #FEF3C7; }  /* light amber — events         */
+
+.icon {
+  width: 22px;
+  height: 22px;
+}
+.icon.blue   { color: #2563EB; }
+.icon.purple { color: #7C3AED; }
+.icon.green  { color: #16A34A; }
+.icon.amber  { color: #D97706; }
+
+/* Status badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.badge.pending {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.badge.settled {
+  background: #DCFCE7;
+  color: #14532D;
+}
+
+/* ── Group name + meta ── */
+.name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-1);
+  line-height: 1.3;
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+  line-height: 1.4;
+}
+
+/* ── Avatar stack at bottom ── */
+.avatarStack {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  border: 2.5px solid var(--color-bg-white);
+  margin-left: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatar:first-child { margin-left: 0; }
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overflow chip e.g. "+4" */
+.overflowChip {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  border: 2.5px solid var(--color-bg-white);
+  margin-left: -8px;
+  background: var(--color-bg-input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
