@@ -51,6 +51,6 @@ app.use("/api/expenses", expenseRoute)
 app.use("/api/balances", balanceRoute)
 app.use("/api/settlement", settlementRoute)
 app.use("/api/payments", paymentRoute)
-app.use("/api/circles", circleRoute)
+
 
 module.exports = app
