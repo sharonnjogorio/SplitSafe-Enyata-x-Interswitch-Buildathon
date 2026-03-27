@@ -11,51 +11,51 @@ export const authService = {
    * Returns a user object with { id, name, email, token }.
    */
   login: async (email, password) => {
-    // ── MOCK (remove when backend is ready) ──────────
-    if (import.meta.env.VITE_USE_MOCK === 'true') {
-      await delay(600)
-      return {
-        id:    'u1',
-        name:  email.split('@')[0],
-        email,
-        token: 'mock-token-123',
-      }
-    }
-    // ── REAL ─────────────────────────────────────────
     const res = await fetch(`${BASE_URL}/auth/login`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ email, password }),
     })
-    if (!res.ok) throw new Error((await res.json()).message || 'Login failed')
-    return res.json()
+    if (!res.ok) {
+      let msg
+      try { msg = (await res.json()).message } catch { /* non-JSON body */ }
+      throw new Error(msg || 'Login failed')
+    }
+    // Response shape: { message, token, user: { id, name, email } }
+    const data = await res.json()
+    return { ...data.user, token: data.token }
   },
 
   /**
-   * Create a new account.
+   * Create a new account then auto-login to obtain a token.
    * Returns a user object with { id, name, email, token }.
    */
   signup: async (fullName, email, password) => {
-    // ── MOCK ─────────────────────────────────────────
-    if (import.meta.env.VITE_USE_MOCK === 'true') {
-      await delay(800)
-      return {
-        id:    'u' + Date.now(),
-        name:  fullName,
-        email,
-        token: 'mock-token-new',
-      }
-    }
-    // ── REAL ─────────────────────────────────────────
-    const res = await fetch(`${BASE_URL}/auth/signup`, {
+    // Step 1 — register (endpoint uses "name", not "fullName")
+    const regRes = await fetch(`${BASE_URL}/auth/register`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ fullName, email, password }),
+      body:    JSON.stringify({ name: fullName, email, password }),
     })
-    if (!res.ok) throw new Error((await res.json()).message || 'Signup failed')
-    return res.json()
+    if (!regRes.ok) {
+      let msg
+      try { msg = (await regRes.json()).message } catch { /* non-JSON body */ }
+      throw new Error(msg || 'Signup failed')
+    }
+
+    // Step 2 — auto-login to get token (register returns no token)
+    const loginRes = await fetch(`${BASE_URL}/auth/login`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ email, password }),
+    })
+    if (!loginRes.ok) {
+      let msg
+      try { msg = (await loginRes.json()).message } catch { /* non-JSON body */ }
+      throw new Error(msg || 'Login after signup failed')
+    }
+    const data = await loginRes.json()
+    return { ...data.user, token: data.token }
   },
 }
 
-// Helper
-const delay = (ms) => new Promise((r) => setTimeout(r, ms))

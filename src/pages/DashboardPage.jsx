@@ -1,20 +1,50 @@
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../hooks/index'
 import { useApp } from '../hooks/index'
 import { computeNetBalance } from '../utils/balances'
 import { formatNaira, formatRelativeTime } from '../utils/formatters'
+import { getDashboard } from '../services/dashboardService'
 import GroupCard from '../components/dashboard/GroupCard'
 import AppLayout from '../layouts/AppLayout'
 import styles from './DashboardPage.module.css'
 
-// Spending breakdown bar colours (from design — blue, purple, amber)
-const SPENDING_COLORS = ['#1D4ED8', '#645EFB', '#EEC200']
+const CATEGORY_META = {
+  food:          { label: 'Food & Dining',   color: '#645EFB' },
+  transport:     { label: 'Transport',       color: '#1D4ED8' },
+  accommodation: { label: 'Accommodation',   color: '#EEC200' },
+  other:         { label: 'Other',           color: '#9CA3AF' },
+}
 
-const SPENDING_DATA = [
-  { label: 'Rent & Household', pct: 45 },
-  { label: 'Entertainment',    pct: 28 },
-  { label: 'Groceries',        pct: 15 },
-]
+function getCategory(description = '') {
+  const d = description.toLowerCase()
+  if (/fuel|petrol|toll|transport|bus|uber|bolt|gate/.test(d))               return 'transport'
+  if (/dinner|lunch|breakfast|food|restaurant|meal|eat|cass|seaside/.test(d)) return 'food'
+  if (/airbnb|hotel|villa|apartment|accommodation|deposit|reservation/.test(d)) return 'accommodation'
+  return 'other'
+}
+
+function computeSpending(groups) {
+  const totals = {}
+  let grand = 0
+  groups.forEach((g) =>
+    (g.expenses || []).forEach((e) => {
+      const cat = getCategory(e.description)
+      totals[cat] = (totals[cat] || 0) + e.amount
+      grand += e.amount
+    })
+  )
+  if (grand === 0) return []
+  return Object.entries(totals)
+    .map(([cat, total]) => ({
+      cat,
+      label: CATEGORY_META[cat].label,
+      color: CATEGORY_META[cat].color,
+      pct:   Math.round((total / grand) * 100),
+      total,
+    }))
+    .sort((a, b) => b.total - a.total)
+}
 
 // Activity icons by category
 function ActivityIcon({ category }) {
@@ -35,6 +65,14 @@ export default function DashboardPage() {
   const { user }   = useAuth()
   const { groups } = useApp()
   const navigate   = useNavigate()
+
+  const [summary, setSummary] = useState(null)
+
+  useEffect(() => {
+    getDashboard()
+      .then(setSummary)
+      .catch(() => {})
+  }, [])
 
   const totalOwed = groups.reduce((s, g) => {
     const n = computeNetBalance(g, user.id)
@@ -154,57 +192,87 @@ export default function DashboardPage() {
         {/* ── Right panel ── */}
         <div className={styles.rightPanel}>
 
-          {/* Vacation fund */}
+          {/* Account summary — live from /dashboard */}
           <div className={styles.fundCard}>
             <div className={styles.fundCardTop}>
               <div className={styles.fundCardLeft}>
-                <div className={styles.fundCardIcon}>🏖</div>
-                <span className={styles.fundCardTitle}>Vacation Fund</span>
+                <div className={styles.fundCardIcon}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                    strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/>
+                    <line x1="2" y1="10" x2="22" y2="10"/>
+                  </svg>
+                </div>
+                <span className={styles.fundCardTitle}>Account Summary</span>
               </div>
-              <span className={styles.fundCardPct}>65%</span>
             </div>
-            <div className={styles.fundProgress}>
-              <div className={styles.fundProgressFill} style={{ width: '65%' }} />
+
+            <div className={styles.summaryRows}>
+              <div className={styles.summaryRow}>
+                <span className={styles.summaryRowLabel}>Net Balance</span>
+                <span className={`${styles.summaryRowValue} ${(summary?.netBalance ?? 0) >= 0 ? styles.pos : styles.neg}`}>
+                  {formatNaira(Math.abs(summary?.netBalance ?? 0))}
+                </span>
+              </div>
+              <div className={styles.summaryRow}>
+                <span className={styles.summaryRowLabel}>Owed to you</span>
+                <span className={`${styles.summaryRowValue} ${styles.pos}`}>
+                  {formatNaira(summary?.totalOwedToYou ?? 0)}
+                </span>
+              </div>
+              <div className={styles.summaryRow}>
+                <span className={styles.summaryRowLabel}>You owe</span>
+                <span className={`${styles.summaryRowValue} ${styles.neg}`}>
+                  {formatNaira(summary?.totalYouOwe ?? 0)}
+                </span>
+              </div>
             </div>
-            <p className={styles.fundMeta}>₦325,000.00 / ₦500,000.00 reached</p>
-            <button className={styles.manageGoalBtn}>Manage Goal</button>
+
+            <button className={styles.manageGoalBtn} onClick={() => navigate('/settlements')}>
+              View Settlements
+            </button>
           </div>
 
-          {/* AI Smart Feature */}
+          {/* Smart settlement feature */}
           <div className={styles.smartCard}>
             <div className={styles.smartBadge}>
               <svg className={styles.smartBadgeIcon} viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" strokeWidth="2">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                <circle cx="8" cy="18" r="3"/><circle cx="16" cy="6" r="3"/>
+                <line x1="8" y1="15" x2="16" y2="9"/>
               </svg>
-              AI Smart Feature
+              Smart Settlements
             </div>
-            <h3 className={styles.smartTitle}>Optimize your debts?</h3>
+            <h3 className={styles.smartTitle}>Settle smarter.</h3>
             <p className={styles.smartDesc}>
-              Our algorithm found a way to reduce your active transactions through chain-settlements.
+              SplitSafe minimises the number of transfers needed to clear all debts across your groups.
             </p>
             <button className={styles.smartBtn} onClick={() => navigate('/settlements')}>
-              Apply Suggestions
+              View Settlements
             </button>
           </div>
 
-          {/* Monthly spending */}
+          {/* Spending breakdown — computed from real expense data */}
           <div className={styles.spendingCard}>
-            <p className={styles.spendingTitle}>Monthly Spending</p>
-            {SPENDING_DATA.map((item, i) => (
-              <div key={item.label}>
-                <div className={styles.spendingRow}>
-                  <span className={styles.spendingName}>{item.label}</span>
-                  <span className={styles.spendingPct}>{item.pct}%</span>
+            <p className={styles.spendingTitle}>Spending Breakdown</p>
+            {computeSpending(groups).length === 0 ? (
+              <p className={styles.spendingEmpty}>No expenses recorded yet.</p>
+            ) : (
+              computeSpending(groups).map((item) => (
+                <div key={item.cat}>
+                  <div className={styles.spendingRow}>
+                    <span className={styles.spendingName}>{item.label}</span>
+                    <span className={styles.spendingPct}>{item.pct}%</span>
+                  </div>
+                  <div className={styles.spendingBar}>
+                    <div
+                      className={styles.spendingBarFill}
+                      style={{ width: `${item.pct}%`, background: item.color }}
+                    />
+                  </div>
                 </div>
-                <div className={styles.spendingBar}>
-                  <div
-                    className={styles.spendingBarFill}
-                    style={{ width: `${item.pct}%`, background: SPENDING_COLORS[i] }}
-                  />
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
 
         </div>

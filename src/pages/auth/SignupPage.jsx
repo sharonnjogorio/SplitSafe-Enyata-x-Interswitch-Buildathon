@@ -31,7 +31,7 @@ export default function SignupPage() {
     setLoading(true)
     try {
       await signup(form.fullName, form.email, form.password)
-      navigate('/')
+      navigate('/dashboard')
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.')
     } finally {
@@ -176,8 +176,8 @@ export default function SignupPage() {
                 onChange={(e) => setAgreed(e.target.checked)}
               />
               I agree to the{' '}
-              <Link to="/terms" style={{ color: 'var(--color-primary)' }}>Terms of Service</Link>and
-              <Link to="/privacy" style={{ color: 'var(--color-primary)' }}>Privacy Policy</Link>.
+              <span style={{ color: 'var(--color-primary)' }}>Terms of Service</span> and{' '}
+              <span style={{ color: 'var(--color-primary)' }}>Privacy Policy</span>.
             </label>
 
             {error && <p className={styles.errorText}>{error}</p>}

@@ -222,33 +222,40 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  color: var(--color-primary);
 }
 
 .fundCardTitle { font-size: 14px; font-weight: 700; color: var(--color-text); }
 
-.fundCardPct {
-  font-size: 14px;
+/* Summary rows inside the account summary card */
+.summaryRows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.summaryRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.summaryRow:last-child { border-bottom: none; }
+
+.summaryRowLabel {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.summaryRowValue {
+  font-size: 13px;
   font-weight: 700;
-  color: var(--color-primary);
 }
-
-.fundProgress {
-  height: 6px;
-  background: var(--color-border);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  margin-bottom: var(--space-2);
-}
-
-.fundProgressFill {
-  height: 100%;
-  background: var(--color-primary);
-  border-radius: var(--radius-full);
-  transition: width 0.4s ease;
-}
-
-.fundMeta { font-size: 11px; color: var(--color-text-secondary); margin-bottom: var(--space-4); }
+.summaryRowValue.pos { color: var(--color-success); }
+.summaryRowValue.neg { color: var(--color-danger); }
 
 .manageGoalBtn {
   width: 100%;
@@ -350,8 +357,9 @@
   margin-bottom: var(--space-2);
 }
 
-.spendingName { font-weight: 500; color: var(--color-text); }
-.spendingPct  { color: var(--color-text-secondary); font-size: 12px; font-weight: 600; }
+.spendingName  { font-weight: 500; color: var(--color-text); }
+.spendingPct   { color: var(--color-text-secondary); font-size: 12px; font-weight: 600; }
+.spendingEmpty { font-size: 12px; color: var(--color-text-muted); text-align: center; padding: var(--space-4) 0; }
 
 .spendingBar {
   height: 4px;

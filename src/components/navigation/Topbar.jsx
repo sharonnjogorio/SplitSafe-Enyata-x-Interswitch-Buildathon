@@ -3,9 +3,9 @@ import { useAuth } from '../../hooks/index'
 import styles from './Topbar.module.css'
 
 const TABS = [
-  { label: 'Dashboard', path: '/',        end: true  },
-  { label: 'Groups',    path: '/groups',  end: false },
-  { label: 'Payments',  path: '/payments',end: false },
+  { label: 'Dashboard', path: '/dashboard', end: true  },
+  { label: 'Groups',    path: '/groups',    end: false },
+  { label: 'Settlements', path: '/settlements', end: false },
 ]
 
 function getInitials(name = '') {

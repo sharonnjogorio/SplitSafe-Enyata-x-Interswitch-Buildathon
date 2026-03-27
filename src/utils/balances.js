@@ -1,10 +1,4 @@
-// utils/balances.js
 
-/**
- * Returns a single user's net balance inside a group.
- * Positive = they are owed money.
- * Negative = they owe money.
- */
 export function computeNetBalance(group, userId) {
   let net = 0
 
@@ -21,10 +15,6 @@ export function computeNetBalance(group, userId) {
   return net
 }
 
-/**
- * Returns net balance for every member of a group.
- * Useful for rendering the members list.
- */
 export function computeMemberBalances(group) {
   return group.members.map((m) => ({
     ...m,

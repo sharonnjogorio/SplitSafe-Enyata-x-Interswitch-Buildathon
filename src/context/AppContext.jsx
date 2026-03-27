@@ -1,95 +1,96 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 import { groupService } from '../services/groupService'
+import { AuthContext_ } from './AuthContext'
 
 const AppContext = createContext(null)
 
-// ── Mock data so you can build UI before the backend is ready ──
-const MOCK_GROUPS = [
-  {
-    id: 'g1',
-    name: 'Summer Road Trip',
-    description: 'A curated archive of the August 2024 coastal expedition.',
-    members: [
-      { id: 'u1', name: 'You'         },
-      { id: 'u2', name: 'Folu Adeyemi' },
-      { id: 'u3', name: 'Amara Okafor' },
-      { id: 'u4', name: 'Bola Tinubu'  },
-    ],
-    expenses: [
-      {
-        id: 'e1', description: 'Seaside Dinner', amount: 45000,
-        paidBy: 'u2', splitBetween: ['u1','u2','u3','u4'],
-        splitType: 'equal', createdAt: '2024-08-14T18:00:00Z',
-      },
-      {
-        id: 'e2', description: 'Fuel Refill - Lagos Toll', amount: 28500,
-        paidBy: 'u3', splitBetween: ['u1','u2','u3','u4'],
-        splitType: 'equal', createdAt: '2024-08-14T12:00:00Z',
-      },
-      {
-        id: 'e3', description: 'Beachfront Villa Deposit', amount: 210000,
-        paidBy: 'u1', splitBetween: ['u1','u2','u3','u4'],
-        splitType: 'equal', createdAt: '2024-08-13T10:00:00Z',
-      },
-    ],
-    settlements: [],
-    createdAt: '2024-08-10T00:00:00Z',
-    updatedAt: '2024-08-14T18:00:00Z',
-  },
-  {
-    id: 'g2',
-    name: 'Apartment 4B',
-    description: 'Rent & Utilities (Monthly)',
-    members: [
-      { id: 'u1', name: 'You'   },
-      { id: 'u5', name: 'Chidi' },
-    ],
-    expenses: [
-      {
-        id: 'e4', description: 'Electricity Bill', amount: 18000,
-        paidBy: 'u1', splitBetween: ['u1','u5'],
-        splitType: 'equal', createdAt: '2024-10-12T09:00:00Z',
-      },
-    ],
-    settlements: [],
-    createdAt: '2024-09-01T00:00:00Z',
-    updatedAt: '2024-10-12T09:00:00Z',
-  },
-]
+export const AppContext_ = AppContext
 
 export function AppProvider({ children }) {
-  const [groups, setGroups]   = useState(MOCK_GROUPS)
+  const { user } = useContext(AuthContext_)
+  const [groups, setGroups]   = useState([])
   const [loading, setLoading] = useState(false)
+
+  // Re-fetch groups (+ their expenses) whenever the logged-in user changes
+  useEffect(() => {
+    if (!user) {
+      setGroups([])
+      return
+    }
+    setLoading(true)
+    groupService.getGroups()
+      .then(async (baseGroups) => {
+        // Load expenses for every group concurrently
+        const full = await Promise.all(
+          baseGroups.map(async (g) => {
+            const expenses = await groupService.getExpenses(g.id).catch(() => [])
+            return { ...g, expenses, settlements: [] }
+          })
+        )
+        setGroups(full)
+      })
+      .catch(() => setGroups([]))
+      .finally(() => setLoading(false))
+  }, [user])
 
   const getGroup = (id) => groups.find((g) => g.id === id)
 
-  const createGroup = async (name, members) => {
-    const newGroup = {
-      id:          'g' + Date.now(),
-      name,
-      members,
-      expenses:    [],
-      settlements: [],
-      createdAt:   new Date().toISOString(),
-      updatedAt:   new Date().toISOString(),
+  // Reload a single group's data from the API and update state
+  const refreshGroup = async (groupId) => {
+    try {
+      const [group, expenses] = await Promise.all([
+        groupService.getGroup(groupId),
+        groupService.getExpenses(groupId),
+      ])
+      setGroups((prev) =>
+        prev.map((g) => g.id === groupId ? { ...group, expenses, settlements: [] } : g)
+      )
+    } catch { /* silent */ }
+  }
+
+  // Backend auto-adds the creator — ignore the members param from the UI
+  const createGroup = async (name) => {
+    try {
+      const newGroup = await groupService.createGroup(name)
+      setGroups((prev) => [...prev, { ...newGroup, expenses: [], settlements: [] }])
+      return newGroup.id
+    } catch {
+      // Fallback: local-only group if backend unavailable
+      const newGroup = {
+        id:          'g' + Date.now(),
+        name,
+        members:     [],
+        expenses:    [],
+        settlements: [],
+        createdAt:   new Date().toISOString(),
+        updatedAt:   new Date().toISOString(),
+      }
+      setGroups((prev) => [...prev, newGroup])
+      return newGroup.id
     }
-    // TODO: replace with real API call
-    // const newGroup = await groupService.createGroup(name, members)
-    setGroups((prev) => [...prev, newGroup])
-    return newGroup.id
   }
 
   const addExpense = async (groupId, expense) => {
-    const newExpense = { ...expense, id: 'e' + Date.now() }
-    // TODO: replace with real API call
-    // await groupService.addExpense(groupId, expense)
-    setGroups((prev) =>
-      prev.map((g) =>
-        g.id === groupId
-          ? { ...g, expenses: [...g.expenses, newExpense], updatedAt: new Date().toISOString() }
-          : g
+    try {
+      const newExpense = await groupService.addExpense(groupId, expense)
+      setGroups((prev) =>
+        prev.map((g) =>
+          g.id === groupId
+            ? { ...g, expenses: [...(g.expenses || []), newExpense], updatedAt: new Date().toISOString() }
+            : g
+        )
       )
-    )
+    } catch {
+      // Fallback: local-only expense
+      const newExpense = { ...expense, id: 'e' + Date.now() }
+      setGroups((prev) =>
+        prev.map((g) =>
+          g.id === groupId
+            ? { ...g, expenses: [...(g.expenses || []), newExpense], updatedAt: new Date().toISOString() }
+            : g
+        )
+      )
+    }
   }
 
   const markPaid = (groupId, from, to, amount) => {
@@ -104,7 +105,7 @@ export function AppProvider({ children }) {
   }
 
   return (
-    <AppContext.Provider value={{ groups, loading, getGroup, createGroup, addExpense, markPaid }}>
+    <AppContext.Provider value={{ groups, loading, getGroup, refreshGroup, createGroup, addExpense, markPaid }}>
       {children}
     </AppContext.Provider>
   )
@@ -115,5 +116,3 @@ export function useApp() {
   if (!ctx) throw new Error('useApp must be used inside <AppProvider>')
   return ctx
 }
-
-export const AppContext_ = AppContext

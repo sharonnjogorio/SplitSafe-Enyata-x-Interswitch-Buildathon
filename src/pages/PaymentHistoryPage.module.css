@@ -1,0 +1,389 @@
+/* PaymentHistoryPage.module.css */
+
+/* ── Page title ── */
+.pageTitle {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-6);
+}
+
+/* ── Summary strip ── */
+.summaryStrip {
+  display: flex;
+  align-items: stretch;
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--space-6);
+  overflow: hidden;
+}
+
+.summaryItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1;
+  padding: var(--space-5) var(--space-6);
+}
+
+.summaryDivider {
+  width: 1px;
+  background: var(--color-border-light);
+  margin: var(--space-4) 0;
+  flex-shrink: 0;
+}
+
+.summaryIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.summaryIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.summaryIcon[data-type="paid"] {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.summaryIcon[data-type="received"] {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.summaryIcon[data-type="total"] {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.summaryText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.summaryLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.summaryAmount {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  line-height: 1.1;
+}
+
+.summaryMeta {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* ── Amount colour helpers ── */
+.amountSuccess { color: var(--color-success); }
+.amountDanger  { color: var(--color-danger);  }
+
+/* ── Main list card ── */
+.listCard {
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+  background: var(--color-bg);
+}
+
+.listHeading {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+.listCount {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-border);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+}
+
+.listBody {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Transaction row ── */
+.txRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+  transition: background var(--transition-fast);
+}
+
+.txRow:last-child {
+  border-bottom: none;
+}
+
+.txRow:hover {
+  background: var(--color-bg);
+}
+
+.txAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.txBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.txDirection {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.txMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  flex-wrap: wrap;
+}
+
+.txGroup {
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.txDot {
+  color: var(--color-text-muted);
+  font-size: 10px;
+}
+
+.txDate {
+  color: var(--color-text-muted);
+}
+
+.txRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.txAmount {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* ── Status badges ── */
+.statusBadge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.badgePaid {
+  background: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.badgePending {
+  background: var(--color-amber-light);
+  color: var(--color-amber-dark);
+}
+
+.badgeNeutral {
+  background: var(--color-bg-input);
+  color: var(--color-text-muted);
+}
+
+/* ── Empty / Error state box ── */
+.stateBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px var(--space-6);
+  text-align: center;
+}
+
+.stateIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-5);
+}
+
+.stateIcon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.stateIcon[data-variant="error"] {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.stateIcon[data-variant="empty"] {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.stateTitle {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-2);
+}
+
+.stateDesc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 320px;
+  margin-bottom: var(--space-5);
+}
+
+.retryBtn {
+  padding: 10px 24px;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.retryBtn:hover {
+  background: var(--color-primary-dark);
+}
+
+/* ── Skeleton loading rows ── */
+.skeletonRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.skeletonRow:last-child {
+  border-bottom: none;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--color-border-light) 25%, #ebebeb 50%, var(--color-border-light) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeletonAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.skeletonBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.skeletonTitle {
+  height: 14px;
+  width: 55%;
+  border-radius: var(--radius-sm);
+}
+
+.skeletonSub {
+  height: 11px;
+  width: 36%;
+  border-radius: var(--radius-sm);
+}
+
+.skeletonRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.skeletonAmount {
+  height: 14px;
+  width: 72px;
+  border-radius: var(--radius-sm);
+}
+
+.skeletonBadge {
+  height: 18px;
+  width: 48px;
+  border-radius: var(--radius-full);
+}

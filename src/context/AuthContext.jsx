@@ -40,10 +40,10 @@ export function AuthProvider({ children }) {
   )
 }
 
+export const AuthContext_ = AuthContext
+
 export function useAuth() {
   const ctx = useContext(AuthContext_)
   if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>')
   return ctx
 }
-
-export const AuthContext_ = AuthContext
