@@ -17,7 +17,7 @@ Built for the **Enyata x Interswitch Buildathon** by Team Stack Innovators.
 
 ## Tech Stack
 **Frontend:** React, CSS Modules  
-**Backend:** Node.js (Express)  
+**Backend:** Node.js (Express), MongoDB
 
 ## Team & Contributions
 

@@ -10,7 +10,6 @@ const expenseRoute = require("./src/routes/expenseRoute")
 const balanceRoute = require("./src/routes/balanceRoute")
 const settlementRoute = require("./src/routes/settlementRoute")
 const paymentRoute = require("./src/routes/paymentRoute")
-const circleRoute = require("./src/routes/circleRoute")
 
 const app = express()
 
