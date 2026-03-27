@@ -17,7 +17,7 @@ function getAvatarColor(name = '') {
 }
 
 export default function ProfilePage() {
-  const { user, setUser } = useAuth()
+  const { user } = useAuth()
 
   const [profile,  setProfile]  = useState(null)
   const [loading,  setLoading]  = useState(true)
@@ -69,23 +69,20 @@ export default function ProfilePage() {
     }
   }
 
-  if (loading) return <AppLayout><p className={styles.stateMsg}>Loading profile…</p></AppLayout>
+  if (loading) return <AppLayout><p style={{ padding: '2rem', color: 'var(--color-text-secondary)' }}>Loading profile…</p></AppLayout>
 
   const displayName = form.name || profile?.name || 'User'
 
   return (
     <AppLayout>
-      <div className={styles.pageHeader}>
-        <h1 className={styles.pageTitle}>Profile</h1>
-        <p className={styles.pageSubtitle}>Manage your account details</p>
-      </div>
+      <h1 className={styles.pageTitle}>Profile</h1>
 
       <div className={styles.layout}>
 
         {/* ── Avatar card ── */}
         <div className={styles.avatarCard}>
           <div
-            className={styles.avatar}
+            className={styles.avatarCircle}
             style={{ background: getAvatarColor(displayName) }}
           >
             {getInitials(displayName)}
@@ -96,12 +93,14 @@ export default function ProfilePage() {
 
         {/* ── Edit form ── */}
         <div className={styles.formCard}>
-          <h2 className={styles.sectionTitle}>Account Details</h2>
+          <div className={styles.cardHeader}>
+            <h2 className={styles.cardTitle}>Account Details</h2>
+          </div>
 
           <div className={styles.fieldGroup}>
-            <label className={styles.label}>Full name</label>
+            <label className={styles.fieldLabel}>Full name</label>
             <input
-              className={styles.input}
+              className={styles.fieldInput}
               value={form.name}
               onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
               placeholder="Your full name"
@@ -109,9 +108,9 @@ export default function ProfilePage() {
           </div>
 
           <div className={styles.fieldGroup}>
-            <label className={styles.label}>Email address</label>
+            <label className={styles.fieldLabel}>Email address</label>
             <input
-              className={`${styles.input} ${styles.inputDisabled}`}
+              className={`${styles.fieldInput} ${styles.fieldInputReadonly}`}
               value={profile?.email || ''}
               disabled
             />
@@ -119,9 +118,9 @@ export default function ProfilePage() {
           </div>
 
           <div className={styles.fieldGroup}>
-            <label className={styles.label}>Phone number</label>
+            <label className={styles.fieldLabel}>Phone number</label>
             <input
-              className={styles.input}
+              className={styles.fieldInput}
               value={form.phone}
               onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
               placeholder="e.g. 08012345678"
@@ -129,8 +128,8 @@ export default function ProfilePage() {
             />
           </div>
 
-          {error  && <p className={styles.errorMsg}>{error}</p>}
-          {saved  && <p className={styles.successMsg}>Profile updated successfully.</p>}
+          {error && <div className={styles.alertBox} data-variant="error">{error}</div>}
+          {saved && <div className={styles.alertBox} data-variant="success">Profile updated successfully.</div>}
 
           <button
             className={styles.saveBtn}

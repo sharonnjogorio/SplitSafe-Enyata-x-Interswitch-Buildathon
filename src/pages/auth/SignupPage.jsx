@@ -50,11 +50,6 @@ export default function SignupPage() {
           </svg>
           SplitSafe
         </Link>
-        <div className={styles.navLinks}>
-          <a href="#" className={styles.navLink}>Features</a>
-          <a href="#" className={styles.navLink}>Security</a>
-          <a href="#" className={styles.navLink}>Pricing</a>
-        </div>
         <div className={styles.navActions}>
           <Link to="/login" className={styles.loginLink}>Login</Link>
           <Link to="/signup" className={styles.signupBtn}>Sign Up</Link>

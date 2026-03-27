@@ -304,46 +304,47 @@ console.log('groups debug:', JSON.stringify(groups.map(g => ({
                       </div>
                     </div>
 
-                    {/* To */}
-                    <div className={styles.txPerson}>
-                      <div className={styles.txAvatar} style={{ background: getAvatarColor(tx.toName) }}>
-                        {getInitials(tx.toName)}
+                    {/* To + Actions grouped */}
+                    <div className={styles.txRight}>
+                      <div className={styles.txPerson}>
+                        <div className={styles.txAvatar} style={{ background: getAvatarColor(tx.toName) }}>
+                          {getInitials(tx.toName)}
+                        </div>
+                        <div className={styles.txPersonInfo}>
+                          <span className={styles.txPersonName}>{tx.to === user.id ? 'You' : tx.toName}</span>
+                          <span className={styles.txPersonRole}>receives</span>
+                        </div>
                       </div>
-                      <div className={styles.txPersonInfo}>
-                        <span className={styles.txPersonName}>{tx.to === user.id ? 'You' : tx.toName}</span>
-                        <span className={styles.txPersonRole}>receives</span>
-                      </div>
-                    </div>
 
-                    {/* Actions */}
-                    <div className={styles.txActions}>
-                      {isMePaying && (
-                        <button
-                          className={styles.payNowBtn}
-                          onClick={() => setPayModal({ tx, group, transactions })}
-                        >
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-                            strokeLinecap="round" strokeLinejoin="round" width="13" height="13">
-                            <rect x="2" y="5" width="20" height="14" rx="2"/>
-                            <line x1="2" y1="10" x2="22" y2="10"/>
-                          </svg>
-                          Pay Now
-                        </button>
-                      )}
-                      {isMeReceiving && (
-                        <span className={styles.awaitingChip}>Awaiting payment</span>
-                      )}
-                      {isMyTx && (
-                        <button
-                          className={styles.markPaidBtn}
-                          onClick={() => handleMarkPaid(group.id, tx)}
-                        >
-                          Mark Paid
-                        </button>
-                      )}
-                      {!isMyTx && (
-                        <span className={styles.thirdPartyChip}>Between others</span>
-                      )}
+                      <div className={styles.txActions}>
+                        {isMePaying && (
+                          <button
+                            className={styles.payNowBtn}
+                            onClick={() => setPayModal({ tx, group, transactions })}
+                          >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                              strokeLinecap="round" strokeLinejoin="round" width="13" height="13">
+                              <rect x="2" y="5" width="20" height="14" rx="2"/>
+                              <line x1="2" y1="10" x2="22" y2="10"/>
+                            </svg>
+                            Pay Now
+                          </button>
+                        )}
+                        {isMeReceiving && (
+                          <span className={styles.awaitingChip}>Awaiting payment</span>
+                        )}
+                        {isMyTx && (
+                          <button
+                            className={styles.markPaidBtn}
+                            onClick={() => handleMarkPaid(group.id, tx)}
+                          >
+                            Mark Paid
+                          </button>
+                        )}
+                        {!isMyTx && (
+                          <span className={styles.thirdPartyChip}>Between others</span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )

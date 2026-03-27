@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/index'
 import styles from './Topbar.module.css'
 
@@ -14,6 +14,7 @@ function getInitials(name = '') {
 
 export default function Topbar() {
   const { user } = useAuth()
+  const navigate = useNavigate()
 
   return (
     <header className={styles.topbar}>
@@ -58,7 +59,7 @@ export default function Topbar() {
         </button>
 
         {/* User avatar */}
-        <div className={styles.avatar} title={user?.name}>
+        <div className={styles.avatar} title={user?.name} onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
           {user?.avatar
             ? <img src={user.avatar} alt={user.name} className={styles.avatarImg} />
             : getInitials(user?.name || 'U')

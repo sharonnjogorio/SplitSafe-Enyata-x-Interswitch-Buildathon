@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './LandingPage.module.css'
 
-const AVATAR_COLORS = ['#1D4ED8', '#7C3AED', '#059669', '#D97706', '#DC2626']
 
 // ── Shared navbar ─────────────────────────────────────────────
 function Navbar() {
@@ -15,11 +14,6 @@ function Navbar() {
         </svg>
         SplitSafe
       </Link>
-      <div className={styles.navLinks}>
-        <a href="#" className={styles.navLink}>Features</a>
-        <a href="#" className={styles.navLink}>Security</a>
-        <a href="#" className={styles.navLink}>Pricing</a>
-      </div>
       <div className={styles.navActions}>
         <Link to="/login"  className={styles.loginLink}>Login</Link>
         <Link to="/signup" className={styles.signupBtn}>Sign Up</Link>
@@ -62,16 +56,6 @@ function SlideOne({ onNext }) {
           </p>
           <div className={styles.btnRow}>
             <button className={styles.nextBtn} onClick={onNext}>Next</button>
-          </div>
-          <div className={styles.socialProof}>
-            <div className={styles.avatarStack}>
-              {AVATAR_COLORS.slice(0, 4).map((c, i) => (
-                <div key={i} className={styles.proofAvatar}
-                  style={{ background: c }}>{['A','B','C','D'][i]}</div>
-              ))}
-              <div className={styles.overflowChip}>+k</div>
-            </div>
-            <span className={styles.socialProofText}>Join 10k+ Trusted members.</span>
           </div>
         </div>
 
@@ -119,12 +103,12 @@ function SlideOne({ onNext }) {
                 </svg>
               </div>
               <div className={styles.metricBody}>
-                <div className={styles.metricLabel}>Treasury Protocol</div>
-                <div className={styles.metricTitle}>Automated Re-balancing</div>
+                <div className={styles.metricLabel}>Interswitch Pay</div>
+                <div className={styles.metricTitle}>Secure In-App Payments</div>
               </div>
               <div className={styles.metricValue}>
-                <div className={styles.metricNum}>$8,420</div>
-                <div className={styles.metricSub}>Portfolio Value</div>
+                <div className={styles.metricNum}>₦0 Fee</div>
+                <div className={styles.metricSub}>To settle</div>
               </div>
             </div>
           </div>
@@ -143,7 +127,7 @@ function SlideOne({ onNext }) {
               <div className={`${styles.networkBar} ${styles.mid}`}/>
             </div>
             <div className={styles.networkBottom}>
-              <span className={styles.networkPrecision}>98.4% Precision</span>
+              <span className={styles.networkPrecision}>Optimised Settlements</span>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="rgba(255,255,255,0.7)" strokeWidth="2">
                 <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
@@ -189,7 +173,7 @@ function SlideOne({ onNext }) {
 }
 
 // ── Slide 2: Optimization ─────────────────────────────────────
-function SlideTwo({ onNext, current }) {
+function SlideTwo({ onNext }) {
   return (
     <div className={`${styles.slide} ${styles.active}`}>
       <div className={styles.slideBody}>
@@ -216,7 +200,7 @@ function SlideTwo({ onNext, current }) {
             <button className={styles.nextBtn} onClick={onNext}>Next →</button>
           </div>
 
-          <Dots current={1} total={3} onChange={() => {}} />
+          <Dots current={1} total={2} onChange={() => {}} />
         </div>
 
         {/* Right */}
@@ -275,8 +259,8 @@ function SlideTwo({ onNext, current }) {
                 </svg>
               </div>
               <div>
-                <div className={styles.verifiedTitle}>Precision Verified</div>
-                <div className={styles.verifiedSub}>99.9% Efficiency Gained</div>
+                <div className={styles.verifiedTitle}>Minimum Transactions</div>
+                <div className={styles.verifiedSub}>Debts fully resolved</div>
               </div>
             </div>
           </div>
@@ -286,147 +270,21 @@ function SlideTwo({ onNext, current }) {
   )
 }
 
-// ── Slide 3: Social Savings ───────────────────────────────────
-function SlideThree({ onGetStarted }) {
-  // SVG circle ring math
-  const radius = 54
-  const circumference = 2 * Math.PI * radius
-  const pct = 85
-  const offset = circumference - (pct / 100) * circumference
-
-  return (
-    <div className={`${styles.slide} ${styles.active}`}>
-      <div className={styles.slideBody}>
-
-        {/* Left */}
-        <div className={styles.hero}>
-          <span className={styles.badge}>Step 03 / Social Savings</span>
-          <h1 className={styles.heroTitle}>
-            Community-Driven{' '}
-            <span className={styles.heroTitleAccent}>Wealth.</span>
-          </h1>
-          <p className={styles.heroDesc}>
-            Grow your wealth together through social savings pools (Ajo). Track
-            contributions, manage payout timelines, and automate your financial growth.
-          </p>
-
-          <div className={styles.btnRow}>
-            <button className={styles.nextBtn} onClick={onGetStarted}>
-              Get Started →
-            </button>
-            <button className={styles.demoBtn}>View Demo</button>
-          </div>
-
-          <div className={styles.socialProof}>
-            <div className={styles.avatarStack}>
-              {AVATAR_COLORS.slice(0, 3).map((c, i) => (
-                <div key={i} className={styles.proofAvatar} style={{ background: c }}>
-                  {['A','B','C'][i]}
-                </div>
-              ))}
-              <div className={styles.overflowChip}>+12k</div>
-            </div>
-            <span className={styles.socialProofText}>JOIN 12,000+ ACTIVE POOLS</span>
-          </div>
-
-          <Dots current={2} total={3} onChange={() => {}} />
-        </div>
-
-        {/* Right */}
-        <div className={styles.visual}>
-          <div className={styles.circleCard}>
-
-            <div className={styles.circleCardTop}>
-              <div>
-                <div className={styles.circleCardTitle}>Vacation Fund</div>
-                <div className={styles.circleCardGoal}>Collective Goal: $12,500.00</div>
-              </div>
-              <div className={styles.automationChip}>
-                <div className={styles.automationChipIcon}>
-                  <svg className={styles.automationChipIconSvg} viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" strokeWidth="2">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                  </svg>
-                </div>
-                <div>
-                  <div className={styles.automationLabel}>Automation</div>
-                  <div className={styles.automationValue}>Payout Scheduled</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Progress ring */}
-            <div className={styles.progressRingWrap}>
-              <svg className={styles.progressRing} width="140" height="140" viewBox="0 0 140 140">
-                <circle className={styles.ringBg}   cx="70" cy="70" r={radius}/>
-                <circle className={styles.ringFill} cx="70" cy="70" r={radius}
-                  strokeDasharray={circumference}
-                  strokeDashoffset={offset}
-                />
-              </svg>
-              <div className={styles.ringLabel}>
-                <span className={styles.ringPct}>{pct}%</span>
-                <span className={styles.ringText}>Complete</span>
-              </div>
-            </div>
-
-            {/* Members */}
-            <div className={styles.memberRow}>
-              <div className={styles.memberAvatar} style={{ background: '#DBEAFE' }}>
-                <span style={{ color: '#1D4ED8', fontWeight: 700 }}>SJ</span>
-              </div>
-              <div className={styles.memberInfo}>
-                <div className={styles.memberName}>Sarah Jenkins</div>
-                <div className={styles.memberContrib}>Contribution: $2,400</div>
-              </div>
-              <span className={styles.paidBadge}>Paid</span>
-            </div>
-
-            <div className={styles.memberRow}>
-              <div className={styles.memberAvatar} style={{ background: '#F3F4F6' }}>
-                <span style={{ color: '#374151', fontWeight: 700 }}>MC</span>
-              </div>
-              <div className={styles.memberInfo}>
-                <div className={styles.memberName}>Marcus Chen</div>
-                <div className={styles.memberContrib}>Contribution: $2,400</div>
-              </div>
-              <span className={styles.upNextBadge}>Up Next</span>
-            </div>
-
-          </div>
-
-          {/* Ajo cycle chip */}
-          <div style={{ position: 'relative', marginTop: 8 }}>
-            <div className={styles.ajoCycleCard}>
-              <div className={styles.ajoCycleLabel}>Ajo Cycle</div>
-              <div className={styles.ajoCycleValue}>
-                <span className={styles.ajoDot}/>
-                12 of 14 Months
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  )
-}
 
 // ── Main LandingPage ──────────────────────────────────────────
 export default function LandingPage() {
   const [slide, setSlide] = useState(0)
   const navigate = useNavigate()
 
-  const next = () => setSlide((s) => Math.min(s + 1, 2))
+  const next = () => setSlide((s) => Math.min(s + 1, 1))
 
   return (
     <div className={styles.page}>
       <Navbar />
 
       <div className={styles.slideWrap}>
-        {slide === 0 && <SlideOne  onNext={next} />}
-        {slide === 1 && <SlideTwo  onNext={next} current={slide} />}
-        {slide === 2 && <SlideThree onGetStarted={() => navigate('/signup')} />}
+        {slide === 0 && <SlideOne onNext={next} />}
+        {slide === 1 && <SlideTwo onNext={() => navigate('/signup')} />}
       </div>
 
       <footer className={styles.footer}>

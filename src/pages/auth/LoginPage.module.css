@@ -144,6 +144,28 @@
 }
 .input::placeholder { color: var(--color-text-muted); }
 
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.passwordWrapper .input {
+  padding-right: 44px;
+}
+.eyeBtn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+.eyeBtn:hover { color: var(--color-text); }
+
 /* Blue login button */
 .loginBtn {
   width: 100%;
